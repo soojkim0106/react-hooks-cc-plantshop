@@ -5,6 +5,7 @@ import Search from "./Search";
 
 function PlantPage() {
   const [plants, setPlants] = useState([]);
+  const [error, setError] = useState("");
   const [search, setSearch] = useState("");
 
   //! Fetching the database
@@ -17,7 +18,7 @@ function PlantPage() {
         return r.json();
       })
       .then(setPlants)
-      .catch((err) => console.log(err));
+      .catch((err) => setError(err.message));
   }, []);
 
   //! Function to add new plant by spreading the original plants and adding new dataset of plant submitted
@@ -30,6 +31,13 @@ function PlantPage() {
     setSearch(event.target.value);
   };
 
+  const onDeletePlant = (deletedPlant) => {
+    const updatedPlants = plants.filter(
+      (plant) => plant.id !== deletedPlant.id
+    );
+    setPlants(updatedPlants);
+  };
+
   //! Need to filter the plants and convert to lowercase for BOTH plant name and the plant searched in the bar
   const filteredPlants = plants.filter((plant) =>
     plant.name.toLowerCase().includes(search.toLowerCase())
@@ -37,9 +45,10 @@ function PlantPage() {
 
   return (
     <main>
+      {error ? <p>{error}</p> : null}
       <NewPlantForm onAddNewPlant={onAddNewPlant} />
       <Search onSearchPlant={onSearchPlant} search={search} />
-      <PlantList plants={filteredPlants} />
+      <PlantList plants={filteredPlants} onDeletePlant={onDeletePlant} />
     </main>
   );
 }
