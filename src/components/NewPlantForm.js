@@ -1,13 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const URL = "http://localhost:6001/plants";
 
-function NewPlantForm({ onAddNewPlant }) {
+const initialState = {
+  name: "",
+  image: "",
+  price: "",
+};
+
+function NewPlantForm({
+  onAddNewPlant,
+  handleChangeEditingMode,
+  handleEditPlant,
+  isEditingMode,
+}) {
   const [newPlantForm, setNewPlantForm] = useState({
     name: "",
     image: "",
     price: "",
   });
+
+  const [originalVersionOfForm, setOriginalVersionOfForm] =
+    useState(initialState);
+
+  useEffect(() => {
+    if (isEditingMode) {
+      fetch(`${URL}/${isEditingMode}`)
+        .then((r) => r.json())
+        .then((data) => {
+          setOriginalVersionOfForm(data);
+          setNewPlantForm(data);
+        })
+        .catch((err) => alert(err));
+    }
+  }, [isEditingMode]);
 
   //! Function to handle all the actions done once the submit button has been pressed
   const handleSubmit = (event) => {
@@ -50,21 +76,19 @@ function NewPlantForm({ onAddNewPlant }) {
 
   return (
     <div className="new-plant-form">
-      <h2>New Plant</h2>
-      <form onSubmit={handleSubmit}>
+      <h2>{isEditingMode ? "Update Existing" : "New"} Plant</h2>
+      <form onSubmit={handleSubmit} onChange={handleChange}>
         <input
           type="text"
           name="name"
           value={newPlantForm.name}
           placeholder="Plant name"
-          onChange={handleChange}
         />
         <input
           type="text"
           name="image"
           value={newPlantForm.image}
           placeholder="Image URL"
-          onChange={handleChange}
         />
         <input
           type="number"
@@ -72,9 +96,10 @@ function NewPlantForm({ onAddNewPlant }) {
           step="0.01"
           value={newPlantForm.price}
           placeholder="Price"
-          onChange={handleChange}
         />
-        <button type="submit">Add Plant</button>
+        <button type="submit">
+          {isEditingMode ? "Edit Plant" : "Add Plant"}
+        </button>
       </form>
     </div>
   );

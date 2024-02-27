@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function PlantCard({ plant, onDeletePlant }) {
+function PlantCard({ plant, onDeletePlant, handleChangeEditingMode }) {
   //! need State to track sold out or not
   const [isSoldOut, setIsSoldOut] = useState(false);
 
@@ -29,6 +29,7 @@ function PlantCard({ plant, onDeletePlant }) {
       ) : (
         <button onClick={handleSoldOut}>Out of Stock</button>
       )}
+      <button onClick={() => handleChangeEditingMode(plant.id)}>Edit</button>
       <button onClick={handleDelete}>Delete</button>
     </li>
   );
