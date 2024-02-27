@@ -41,6 +41,12 @@
       "name": "Fiddle Leaf Fig",
       "image": "./images/fiddle-leaf-fig.jpg",
       "price": 55
+    },
+    {
+      "name": "Food",
+      "image": "Free PSD pothos epipremnum aureum flower png isolated on transparent background tohamina",
+      "price": "12",
+      "id": 8
     }
   ]
 }
