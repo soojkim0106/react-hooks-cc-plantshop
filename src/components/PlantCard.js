@@ -12,6 +12,8 @@ function PlantCard({ plant, onDeletePlant, handleChangeEditingMode }) {
       .then(() => onDeletePlant(plant));
   };
 
+  //! Need to work on PATCH
+
   //! Function to change In Stock to Sold out
   const handleSoldOut = () => {
     setIsSoldOut((currentVal) => !currentVal);
