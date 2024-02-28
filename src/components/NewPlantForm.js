@@ -77,18 +77,20 @@ function NewPlantForm({
   return (
     <div className="new-plant-form">
       <h2>{isEditingMode ? "Update Existing" : "New"} Plant</h2>
-      <form onSubmit={handleSubmit} onChange={handleChange}>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="name"
           value={newPlantForm.name}
           placeholder="Plant name"
+          onChange={handleChange}
         />
         <input
           type="text"
           name="image"
           value={newPlantForm.image}
           placeholder="Image URL"
+          onChange={handleChange}
         />
         <input
           type="number"
@@ -96,6 +98,7 @@ function NewPlantForm({
           step="0.01"
           value={newPlantForm.price}
           placeholder="Price"
+          onChange={handleChange}
         />
         <button type="submit">
           {isEditingMode ? "Edit Plant" : "Add Plant"}

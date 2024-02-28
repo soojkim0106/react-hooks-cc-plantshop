@@ -13,9 +13,9 @@ function PlantPage() {
   useEffect(() => {
     fetch("http://localhost:6001/plants")
       .then((r) => {
-        if (!r.ok) {
-          throw new Error("The json server is not running!");
-        }
+        // if (!r.ok) {
+        //   throw new Error("The json server is not running!");
+        // }
         return r.json();
       })
       .then(setPlants)
